@@ -5,7 +5,7 @@ single `unknown` class covering 553 speakers who are never individually labelled
 Scored by **macro-F1**, so every speaker counts as much as the `unknown` class
 that holds half the data.
 
-**Leaderboard: 0.96695 macro-F1** (accuracy 0.97364).
+**Leaderboard: 0.96700 macro-F1** (accuracy 0.97364).
 
 ```
 v1  plain 1-NN on ECAPA                              0.96000
@@ -13,6 +13,7 @@ v2  + ResNet fusion, AS-norm, margin threshold       0.96600
 v3  + mild Sinkhorn prior correction                 0.96585   (rejected)
     v2 with the margin threshold re-tuned on the
     leaderboard instead of cross-validation          0.96695
+    + fusion weights flattened to 1:1                0.96700
 ```
 
 ---
@@ -59,7 +60,7 @@ totalled less than a tenth of that.
 ```
 WAV (1 channel)  ->  energy VAD  ->  up to 10 chunks of 6 s
                  ->  ECAPA-TDNN and ResNet embeddings, mean of L2-normed chunks
-                 ->  AS-norm per encoder, fused 1:3
+                 ->  AS-norm per encoder, fused 1:1
                  ->  predict the best known speaker if it beats the best unknown
                      prototype by tau = 0.32, else "unknown"
 ```
@@ -92,6 +93,12 @@ tau = 0.45  ->  0.96497        quadratic vertex: tau = 0.303
 
 Re-tuning one number against the leaderboard was worth more than the previous
 thirteen experiments combined.
+
+The same reasoning predicted the fusion weights were mis-tuned too, for the same
+reason. They were not -- 1:1 and 1:3 return *identical* accuracy to sixteen
+digits and differ by 0.00005 macro-F1, a seventh of one file. That parameter sits
+on a plateau. A correct diagnosis of the protocol does not imply every parameter
+it touched is wrong.
 
 ## What did not work
 

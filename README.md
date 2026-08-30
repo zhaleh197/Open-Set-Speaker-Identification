@@ -118,6 +118,9 @@ positive ones.
 | Starved-class rescue | +0.000 | the rescue picks the right file 3.8% of the time — a speaker gets zero predictions precisely because its own files do not score for it |
 | Test-time query aggregation | +0.001 | grouping is 98% pure and it still buys nothing |
 | Neural VAD front-end | −0.002 | LibriParty VAD removes useful speech in this domain |
+| Multi-speaker files | refuted | the assumption holds: the two halves of even the most split file sit at cosine 0.67, against 0.12 for two genuinely different speakers |
+| One-to-one group matching | **−0.058** | see below |
+| 3 s chunks instead of 6 s | +0.001 | uniform across every tau, the only positive left untested on the leaderboard |
 
 ### The one that nearly shipped
 
@@ -130,6 +133,29 @@ construction. Rebuilding the folds with uneven speaker counts turned it into
 A t-statistic says an effect is not chance. It does not say the effect comes from
 the data rather than from how the experiment was built. The only thing that
 separated the two was deliberately breaking the assumption.
+
+### The reframing that should have worked
+
+This is not really open-set recognition. There are exactly 999 people; 446 carry
+identity labels and 553 are pooled under one. No genuinely unseen speaker exists,
+and the eval set is those same 999 people at ~3.6 files each. So each known
+speaker owns at most one group of test files, and a one-to-one assignment between
+groups and speakers should repair both failure modes at once: two groups claiming
+the same speaker, and speakers receiving nothing.
+
+It scored **−0.058**. The constraint is true of people and false of the grouping.
+Purity and completeness are not the same property, and only purity had been
+measured:
+
+```
+purity        98%   groups do not mix speakers          <- measured early
+completeness   --   all of a speaker's files in ONE group   <- never measured
+```
+
+Grouping fragments a speaker across two or three groups, so "at most one group
+per speaker" forces the others to `unknown` and destroys correct predictions. The
+threshold that would make groups complete is the same one that destroys their
+purity. That tension is structural, not a hyperparameter.
 
 ## Layout
 

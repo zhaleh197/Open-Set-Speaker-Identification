@@ -1,0 +1,14 @@
+{
+  "id": "zhalehmanbari/iaaa3-05-extra-models",
+  "title": "iaaa3 05 extra models",
+  "code_file": "extra_models.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": ["zhalehmanbari/iaaa-speaker"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

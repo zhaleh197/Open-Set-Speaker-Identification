@@ -1,0 +1,16 @@
+{
+  "id": "zhalehmanbari/iaaa3-02-embed-baseline",
+  "title": "iaaa3 02 embed baseline",
+  "code_file": "embed_baseline.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "zhalehmanbari/iaaa-speaker"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

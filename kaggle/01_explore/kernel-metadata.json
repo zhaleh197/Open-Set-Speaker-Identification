@@ -1,0 +1,13 @@
+{
+  "id": "YOUR_USERNAME/iaaa3-01-explore",
+  "title": "iaaa3 01 explore",
+  "code_file": "explore.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}

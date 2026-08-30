@@ -1,0 +1,10 @@
+{
+  "tau": 0.25,
+  "weights": {
+    "ecapa": 1,
+    "resnet": 3
+  },
+  "holdout1": 0.9481183038946515,
+  "holdout2": 0.9541682371055451,
+  "asnorm_cohort": 300
+}

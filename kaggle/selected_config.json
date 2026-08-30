@@ -1,0 +1,18 @@
+{
+  "models": [
+    "ecapa",
+    "eres2netv2",
+    "resnet",
+    "eres2net"
+  ],
+  "weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "tau": 0.4,
+  "holdout1": 0.9509544087356797,
+  "holdout2": 0.9525342360230507,
+  "cohort": 300
+}

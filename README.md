@@ -121,6 +121,8 @@ positive ones.
 | Multi-speaker files | refuted | the assumption holds: the two halves of even the most split file sit at cosine 0.67, against 0.12 for two genuinely different speakers |
 | One-to-one group matching | **−0.058** | see below |
 | 3 s chunks instead of 6 s | +0.001 | uniform across every tau, the only positive left untested on the leaderboard |
+| Target-dependent scoring | −0.005 | T-norm, per-speaker midpoint and d-prime offsets all lose; AS-norm already does the target-side normalisation |
+| Short-file padding policy | +0.000 | tile / pad / reflect / raw all land within 1.5 points on the affected files |
 
 ### The one that nearly shipped
 
@@ -156,6 +158,35 @@ Grouping fragments a speaker across two or three groups, so "at most one group
 per speaker" forces the others to `unknown` and destroys correct predictions. The
 threshold that would make groups complete is the same one that destroys their
 purity. That tension is structural, not a hyperparameter.
+
+## Where the remaining error actually is
+
+Per-speaker separability on the training data is **d' ~ 10.3**. ECAPA on
+VoxCeleb1-O manages d' ~ 4.8. For well-formed files this task is already solved;
+what is left is not speakers being confusable.
+
+```
+well-covered files            1.0% error
+overall                       3.3% error
+short files (4.3%, ~2.7 s)   28% error, under every representation tried
+```
+
+Four padding policies were compared on those short files -- tiling, zero-pad,
+reflect, and handing ECAPA the raw clip. They produce genuinely different vectors
+(zero-pad is near-orthogonal to tiling for some files) and land within 1.5 points
+of each other on accuracy. At 2.7 seconds the identity information is not there
+to recover, whichever way it is presented.
+
+That accounts for the whole picture. If those files went from 72% to perfect it
+would be worth roughly 0.015 macro-F1 -- about twice the distance to first place.
+Every idea tried since 0.9660 failed for the same reason: none of them reach that
+subset.
+
+The one avenue never used is the one the rules explicitly allow: *"Use external
+speech datasets. Perform pretraining or self-supervised learning."* Fine-tuning
+hit a ceiling at ~5 files per speaker, and external data is what lifts it. An
+encoder adapted for short-utterance robustness on outside corpora is the only
+lever left that touches the files where all the error lives.
 
 ## Layout
 
